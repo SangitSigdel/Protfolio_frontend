@@ -13,7 +13,7 @@ pipeline {
     stages {
         stage('Build') { 
             steps {
-                echo "1st Building....."
+                echo "1st Building.....
             }
         }
         stage('Test') { 
