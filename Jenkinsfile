@@ -13,7 +13,7 @@ pipeline {
     stages {
         stage('Build') { 
             steps {
-                echo "1st Building....."
+                echo "1st Building... "
             }
         }
         stage('Test') { 
@@ -23,16 +23,17 @@ pipeline {
         }
         stage('Deploy') { 
             steps {
-                echo ("3rd Deoploy.........")
+                echo ("3rd Deoploy .........")
             }
         }
     }
     post {
         success {
-            setBuildStatus("Build succeeded", "SUCCESS");
+            setBuildStatus("Build succeeded ✅", "SUCCESS"); 
         }
         failure {
-            setBuildStatus("Build failed", "FAILURE");
+            setBuildStatus("Build failed ❌ ", "FAILURE");
         }
+
     }
 }
