@@ -23,7 +23,7 @@ pipeline {
         }
         stage('Deploy') { 
             steps {
-                echo ("3rd Deoploy.........")
+                echo ("3rd Deoploy .........")
             }
         }
     }
@@ -34,5 +34,6 @@ pipeline {
         failure {
             setBuildStatus("Build failed ❌ ", "FAILURE");
         }
+
     }
 }
