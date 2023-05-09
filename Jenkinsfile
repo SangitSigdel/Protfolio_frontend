@@ -23,7 +23,7 @@ pipeline {
         }
         stage('Deploy') { 
             steps {
-                eco ("3rd Deoploy .........")
+                echo ("3rd Deoploy .........")
             }
         }
     }
