@@ -14,15 +14,21 @@ pipeline {
         stage('Build') { 
             steps {
                 echo "1st Building... "
+                git branch: 'develop', url: 'git@github.com:SangitSigdel/Protfolio_frontend.git'
+                sh "npm install"
+                // perform npm install
+                // Perform building 
             }
         }
         stage('Test') { 
             steps {
+                // perfrom detailed unit tests
                 echo "2nd Testing........."
             }
         }
         stage('Deploy') { 
             steps {
+                // copy the build file to nginx www directory on the front end server
                 echo ("3rd Deoploy .........")
             }
         }
