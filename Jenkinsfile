@@ -35,10 +35,16 @@ pipeline {
                 sh "npm run test"
             }
         }
-        stage('Deploy') { 
-            steps {
-                // copy the build file to nginx www directory on the front end server
-                echo ("3rd Deoploy .........")
+        stage('Deploy') 
+            { 
+                 steps{
+                    sshagent(credentials : ['use-the-id-from-credential-generated-by-jenkins']) 
+                    {
+                        sh 'ssh -o StrictHostKeyChecking=no ubuntu@18.134.7.226 uptime'
+                        sh 'ssh -v ubuntu@18.134.7.226'
+                        // sh 'scp ./source/filename ubuntu@18.134.7.226:/remotehost/target'
+                    }
+    }
             }
         }
     }
