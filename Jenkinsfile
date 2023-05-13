@@ -14,20 +14,21 @@ pipeline {
       timeout(time: 12, unit: 'MINUTES') 
     } 
     stages {
+
+        stage ('Start'){
+            echo "Starting......."
+            git branch: 'develop', url: 'git@github.com:SangitSigdel/Protfolio_frontend.git'
+        }
         stage('Build') { 
             steps {
                 echo "1st Building..... "
-                git branch: 'develop', url: 'git@github.com:SangitSigdel/Protfolio_frontend.git'
                 sh "npm install"
-                // perform npm install
-                // Perform building 
             }
         }
         stage('Test') { 
             steps {
                 // perfrom detailed unit tests
                 echo "2nd Testing........."
-                sh "pwd"
                 sh "npm run test"
             }
         }
