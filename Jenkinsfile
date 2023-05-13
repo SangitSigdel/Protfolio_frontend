@@ -14,14 +14,7 @@ pipeline {
       timeout(time: 12, unit: 'MINUTES') 
     } 
     stages {
-
-        stage ('Start') {
-            steps{ 
-                echo "Starting......."
-                git branch: "", url: 'git@github.com:SangitSigdel/Protfolio_frontend.git'    
-            }
-            
-        }
+        
         stage('Build') { 
             steps {
                 echo "1st Building..... "
