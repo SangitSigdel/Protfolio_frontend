@@ -30,7 +30,6 @@ pipeline {
         }
         stage('Test') { 
             steps {
-                // perfrom detailed unit tests
                 echo "2nd Testing........."
                 sh "npm run test"
             }
@@ -39,8 +38,7 @@ pipeline {
             { 
                  steps{
                     sh 'npm run build'
-                    sh 'ssh -i /var/jenkins_home/workspace/web_server.pem ubuntu@18.134.7.226'
-                    sh 'scp ubuntu@18.134.7.226:/build /etc/nginx/www'
+                    sh 'scp -r -i /var/jenkins_home/workspace/web_server.pem build/* ubuntu@18.134.7.226:/etc/nginx/www'
                 }
             }
         }
