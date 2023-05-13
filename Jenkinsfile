@@ -39,7 +39,8 @@ pipeline {
             { 
                  steps{
                     sh 'npm run build'
-                    sh 'pwd'
+                    sh 'ssh -i /var/jenkins_home/workspace/web_server.pem ubuntu@18.134.7.226'
+                    sh 'scp ubuntu@18.134.7.226:/build /etc/nginx/www'
                 }
             }
         }
