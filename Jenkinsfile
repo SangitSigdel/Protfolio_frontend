@@ -18,8 +18,7 @@ pipeline {
         stage ('Start') {
             steps{ 
                 echo "Starting......."
-                gitHubPRStatus githubPRMessage('''${GITHUB_PR_COND_REF} run started''')
-                git branch: "", url: 'git@github.com:SangitSigdel/Protfolio_frontend.git'    
+                // git branch: "", url: 'git@github.com:SangitSigdel/Protfolio_frontend.git'    
             }
             
         }
