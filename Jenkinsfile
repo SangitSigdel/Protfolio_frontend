@@ -9,7 +9,10 @@ void setBuildStatus(String message, String state) {
 }
 
 pipeline {
-    agent any 
+    agent any
+    options {
+      timeout(time: 12, unit: 'MINUTES') 
+    } 
     stages {
         stage('Build') { 
             steps {
