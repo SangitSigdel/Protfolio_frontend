@@ -27,6 +27,7 @@ pipeline {
             steps {
                 // perfrom detailed unit tests
                 echo "2nd Testing........."
+                sh "npm run test"
             }
         }
         stage('Deploy') { 
