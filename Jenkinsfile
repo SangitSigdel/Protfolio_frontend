@@ -18,7 +18,7 @@ pipeline {
             steps {
                 echo "1st Building... "
                 git branch: 'develop', url: 'git@github.com:SangitSigdel/Protfolio_frontend.git'
-                sh "npm install"
+                sh "yarn install"
                 // perform npm install
                 // Perform building 
             }
@@ -28,7 +28,7 @@ pipeline {
                 // perfrom detailed unit tests
                 echo "2nd Testing.........."
                 sh "pwd"
-                sh "npm run test"
+                sh "yarn run test"
             }
         }
         stage('Deploy') { 
