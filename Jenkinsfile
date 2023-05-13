@@ -44,7 +44,7 @@ pipeline {
                         sh 'ssh -v ubuntu@18.134.7.226'
                         // sh 'scp ./source/filename ubuntu@18.134.7.226:/remotehost/target'
                     }
-    }
+                }
             }
         }
     }
@@ -57,4 +57,3 @@ pipeline {
         }
 
     }
-}
