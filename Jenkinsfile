@@ -18,7 +18,7 @@ pipeline {
         stage ('Start') {
             steps{ 
                 echo "Starting......."
-                git branch: '', url: 'git@github.com:SangitSigdel/Protfolio_frontend.git'    
+                git branch: 'develop', url: 'git@github.com:SangitSigdel/Protfolio_frontend.git'    
             }
             
         }
