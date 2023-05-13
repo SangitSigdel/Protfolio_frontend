@@ -38,7 +38,7 @@ pipeline {
         stage('Deploy') 
             { 
                  steps{
-                    sh 'pwd'
+                    sh 'npm run build'
                 }
             }
         }
