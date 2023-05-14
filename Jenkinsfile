@@ -31,10 +31,7 @@ pipeline {
             { 
                 steps {
                     script {
-                        def current_branch= sh(
-                            script: 'git branch --show-current',
-                            returnStdout: true
-                        ).trim()
+                        def current_branch= "sangit"
                         echo "-----------------------------"
                         echo "${current_branch}"
                     // if ( ${current_branch} === 'develop') {
