@@ -39,7 +39,7 @@ pipeline {
                         gitBranch = sh(returnStdout: true, script: 'git rev-parse --abbrev-ref HEAD').trim()
 
                         // Print the captured branch name
-                        if ( gitBranch === 'develop') {
+                        if ( ${gitBranch} === 'develop') {
                         steps{
                             sh 'npm run build'
                             sh 'scp -r -i /var/jenkins_home/web_server.pem build/* ubuntu@18.170.48.210:/var/www/Protfolio_web_app/'
