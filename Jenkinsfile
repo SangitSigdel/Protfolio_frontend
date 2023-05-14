@@ -39,13 +39,13 @@ pipeline {
                         sh 'scp -r -i /var/jenkins_home/workspace/web_server.pem build/* ubuntu@18.134.7.226:/var/www/Protfolio_web_app/'
                     }
                     else {
-                        echo "======== Website will be deployed on merge to develop branch ============="
+                        echo "======== The current branch is ${branchName}. However, Website will be deployed on merge to develop branch ============="
                     }
                 }
             }
         }
     }
-    
+
         post {
             success {
                 setBuildStatus("Build succeeded ✅", "SUCCESS"); 
