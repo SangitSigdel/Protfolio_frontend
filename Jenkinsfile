@@ -29,17 +29,21 @@ pipeline {
         }
         stage('Deploy') 
             { 
-                if(env.BRANCH_NAME.startsWith("develop")){
-                    steps{
-                        sh 'npm run build'
-                        sh 'scp -r -i /var/jenkins_home/web_server.pem build/* ubuntu@18.170.48.210:/var/www/Protfolio_web_app/'
-                    }
-                } 
-                else {
-                        steps {
-                            echo "-------success---------"
-                        }
-                    } 
+
+                steps {
+                    echo "${BRANCH_NAME}"
+                }
+                // if(env.BRANCH_NAME.startsWith("develop")){
+                //     steps{
+                //         sh 'npm run build'
+                //         sh 'scp -r -i /var/jenkins_home/web_server.pem build/* ubuntu@18.170.48.210:/var/www/Protfolio_web_app/'
+                //     }
+                // } 
+                // else{
+                //         steps {
+                //             echo
+                //         }
+                //     } 
             }
         }
         post {
