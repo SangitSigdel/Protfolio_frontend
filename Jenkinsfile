@@ -23,27 +23,24 @@ pipeline {
         }
         stage('Test') { 
             steps {
-                echo "2nd Testing.........."
+                echo "2nd Testing........."
                 sh "npm run test"
             }
         }
         stage('Deploy') 
             { 
-
-                steps {
-                    echo "${BRANCH_NAME}"
+                 steps{
+                    script {
+                        if (env.BRANCH_NAME==="develop"){
+                            sh 'npm run build'
+                            sh 'scp -r -i /var/jenkins_home/web_server.pem build/* ubuntu@18.170.48.210:/var/www/Protfolio_web_app/'
+                        }
+                        else {
+                            echo ("=========DEPLOY IS DONE AFTER MERGING TO DEVELOP BRANCH=================")
+                        }
+                    }
+                    
                 }
-                // if(env.BRANCH_NAME.startsWith("develop")){
-                //     steps{
-                //         sh 'npm run build'
-                //         sh 'scp -r -i /var/jenkins_home/web_server.pem build/* ubuntu@18.170.48.210:/var/www/Protfolio_web_app/'
-                //     }
-                // } 
-                // else{
-                //         steps {
-                //             echo
-                //         }
-                //     } 
             }
         }
         post {
