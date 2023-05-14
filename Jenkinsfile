@@ -30,7 +30,7 @@ pipeline {
         stage('Deploy') 
             { 
                 script {
-                    current_branch= echo `git branch --show-current`
+                    current_branch= sh "git branch --show-current"
                     if (current_branch == 'develop') {
                         steps{
                             sh 'npm run build'
