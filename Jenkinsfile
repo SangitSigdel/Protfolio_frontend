@@ -30,7 +30,8 @@ pipeline {
         stage('Deploy') 
             { 
                 script {
-                    if (echo `git branch --show-current` == 'develop') {
+                    current_branch= echo `git branch --show-current`
+                    if (current_branch == 'develop') {
                         steps{
                             sh 'npm run build'
                             sh 'scp -r -i /var/jenkins_home/web_server.pem build/* ubuntu@18.170.48.210:/var/www/Protfolio_web_app/'
