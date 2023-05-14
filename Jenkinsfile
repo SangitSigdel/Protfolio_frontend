@@ -27,29 +27,23 @@ pipeline {
                 sh "npm run test"
             }
         }
-        stage('Deploy') 
-            { 
-                steps {
+        stage('Deploy') {
+            steps {
+                script {
+                    // Get the current branch name
+                    def gitBranch = sh(returnStdout: true, script: 'git rev-parse --abbrev-ref HEAD').trim()
 
-                    script {
-                        // Define a variable
-                        def gitBranch
-
-                        // Run the git command to get the current branch name
-                        gitBranch = sh(returnStdout: true, script: 'git rev-parse --abbrev-ref HEAD').trim()
-
-                        // Print the captured branch name
-                        if ( ${gitBranch} === 'develop') {
-                        steps{
-                            sh 'npm run build'
-                            sh 'scp -r -i /var/jenkins_home/web_server.pem build/* ubuntu@18.170.48.210:/var/www/Protfolio_web_app/'
-                        }
+                    // Check if the branch is "develop"
+                    if (gitBranch == 'develop') {
+                        // Deployment steps for the "develop" branch
+                        echo "Deploying branch 'develop'"
+                        // Add your deployment commands or steps here
                     } else {
-                        echo '==== deoploy will continue after merging to develop branch ====='
+                        // Skip deployment for other branches
+                        echo "Skipping deployment for branch '${gitBranch}'"
                     }
-                    }
-
                 }
+            }
             }
         }
         post {
