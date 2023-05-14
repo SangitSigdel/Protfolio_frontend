@@ -31,7 +31,7 @@ pipeline {
             { 
                 steps {
                     script {
-                        def output = sh(returnStdout: true, script: 'git branch --show-current')
+                        def output = sh(returnStdout: true, script: echo `git branch --show-current`)
                         echo "-----------------------------"
                         echo "${output}"   
                     }
