@@ -30,15 +30,7 @@ pipeline {
         stage('Deploy') 
             { 
                  steps{
-                    script {
-                        if (env.BRANCH_NAME==="develop"){
-                            sh 'npm run build'
-                            sh 'scp -r -i /var/jenkins_home/web_server.pem build/* ubuntu@18.170.48.210:/var/www/Protfolio_web_app/'
-                        }
-                        else {
-                            echo ("=========DEPLOY IS DONE AFTER MERGING TO DEVELOP BRANCH=================")
-                        }
-                    }
+                    echo 'Pulling...' + env.BRANCH_NAME
                     
                 }
             }
