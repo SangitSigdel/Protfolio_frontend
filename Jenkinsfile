@@ -30,7 +30,7 @@ pipeline {
         stage('Deploy') 
             { 
                  steps{
-                    echo 'Pulling...' + env.BRANCH_NAME
+                    echo 'Pulling...' + sh 'git branch --show-current'
                     
                 }
             }
