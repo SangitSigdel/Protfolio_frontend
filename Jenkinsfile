@@ -30,12 +30,11 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    // // Run the shell command to get the current Git branch and capture the output
-                    // def branchName = sh(returnStdout: true, script: 'git rev-parse --abbrev-ref HEAD').trim()
+                    // Run the shell command to get the current Git branch and capture the output
+                    def branchName = sh(returnStdout: true, script: 'git ls-remote --heads origin | grep $(git rev-parse HEAD) | cut -d / -f 3').trim()
 
-                    // // Print the branch name
-                    // echo "The current Git branch is: ${branchName}"
-                    sh "git branch --show-current"
+                    // Print the branch name
+                    echo "The current Git branch is: ${branchName}"
                 }
             }
         }
