@@ -30,8 +30,8 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    // Run the echo command and capture the output
-                    def echoOutput = sh(returnStdout: true, script: 'echo `git branch --show-current`')
+                    // Run the shell command and capture the output
+                    def echoOutput = sh(returnStdout: true, script: 'echo "Hello, Jenkins!"').trim()
 
                     // Assign the captured output to a variable
                     def myVariable = echoOutput
