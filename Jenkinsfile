@@ -31,7 +31,7 @@ pipeline {
             { 
                 steps {
                     script {
-                        def current_branch= sh ("git branch")
+                        def current_branch= echo`git branch`
                         echo "-----------------------------"
                         echo "${current_branch}"   
                     }
