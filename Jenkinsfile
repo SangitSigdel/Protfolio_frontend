@@ -31,7 +31,7 @@ pipeline {
             steps {
                 script {
                     // Run the echo command and capture the output
-                    def echoOutput = sh(returnStdout: true, script: 'echo `git branch --show-current`').trim()
+                    def echoOutput = sh(returnStdout: true, script: 'echo `git branch --show-current`')
 
                     // Assign the captured output to a variable
                     def myVariable = echoOutput
