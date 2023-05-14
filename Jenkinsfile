@@ -30,11 +30,25 @@ pipeline {
         stage('Deploy') 
             { 
                 steps {
+
                     script {
-                        def output = sh(returnStdout: true, script: echo `git branch --show-current`)
-                        echo "-----------------------------"
-                        echo "${output}"   
+                        // Define a variable
+                        def gitBranch
+
+                        // Run the git command to get the current branch name
+                        gitBranch = sh(returnStdout: true, script: 'git rev-parse --abbrev-ref HEAD').trim()
+
+                        // Print the captured branch name
+                        if ( gitBranch === 'develop') {
+                        steps{
+                            sh 'npm run build'
+                            sh 'scp -r -i /var/jenkins_home/web_server.pem build/* ubuntu@18.170.48.210:/var/www/Protfolio_web_app/'
+                        }
+                    } else {
+                        echo '==== deoploy will continue after merging to develop branch ====='
                     }
+                    }
+
                 }
             }
         }
