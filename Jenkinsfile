@@ -29,14 +29,18 @@ pipeline {
         }
         stage('Deploy') 
             { 
-                current_branch= sh "git branch --show-current"
-                if (current_branch == 'develop') {
-                    steps{
-                        sh 'npm run build'
-                        sh 'scp -r -i /var/jenkins_home/web_server.pem build/* ubuntu@18.170.48.210:/var/www/Protfolio_web_app/'
+                steps {
+                    script {
+                    current_branch= sh "git branch --show-current"
+                    if (current_branch == 'develop') {
+                        steps{
+                            sh 'npm run build'
+                            sh 'scp -r -i /var/jenkins_home/web_server.pem build/* ubuntu@18.170.48.210:/var/www/Protfolio_web_app/'
+                        }
+                    } else {
+                        echo '==== deoploy will continue after merging to develop branch ====='
                     }
-                } else {
-                    echo '====deoploy will continue after merging to develop branch=============='
+                }
                 }
             }
         }
