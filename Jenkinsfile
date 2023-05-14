@@ -8,6 +8,8 @@ void setBuildStatus(String message, String state) {
   ]);
 }
 
+def current_branch= sh(script: 'git branch --show-current',returnStdout: true).trim()
+
 pipeline {
     agent any
     options {
@@ -31,10 +33,7 @@ pipeline {
             { 
                 steps {
                     script {
-                        current_branch= sh(
-                            script: 'git branch --show-current',
-                            returnStdout: true
-                        ).trim()
+                        
                         echo "-----------------------------"
                         echo "${current_branch}"
                     // if ( ${current_branch} === 'develop') {
