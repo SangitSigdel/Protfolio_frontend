@@ -17,7 +17,7 @@ pipeline {
         
         stage('Build') { 
             steps {
-                echo "1st Building....... "
+                echo "1st Building..... "
                 sh "npm install"
             }
         }
@@ -27,23 +27,25 @@ pipeline {
                 sh "npm run test"
             }
         }
-        stage('Deploy') 
-            { 
-                steps {
-                    script {
-                    current_branch= sh "git branch --show-current"
-                    if (current_branch == 'develop') {
-                        steps{
-                            sh 'npm run build'
-                            sh 'scp -r -i /var/jenkins_home/web_server.pem build/* ubuntu@18.170.48.210:/var/www/Protfolio_web_app/'
-                        }
-                    } else {
-                        echo '==== deoploy will continue after merging to develop branch ====='
+        stage('Deploy') {
+            steps {
+                script {
+                    // Run the shell command to get the current Git branch and capture the output
+                    def branchName = sh(returnStdout: true, script: 'git ls-remote --heads origin | grep $(git rev-parse HEAD) | cut -d / -f 3').trim()
+
+                    // Print the branch name
+                    if(branchName=="develop"){
+                        sh 'npm run build'
+                        sh 'scp -r -i /var/jenkins_home/workspace/web_server.pem build/* ubuntu@18.134.7.226:/var/www/Protfolio_web_app/'
                     }
-                }
+                    else {
+                        echo "======== The current branch is ${branchName}. However, Website will be deployed on merge to develop branch ============="
+                    }
                 }
             }
         }
+    }
+
         post {
             success {
                 setBuildStatus("Build succeeded ✅", "SUCCESS"); 
