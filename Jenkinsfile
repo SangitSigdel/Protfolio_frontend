@@ -17,7 +17,7 @@ pipeline {
         
         stage('Build') { 
             steps {
-                echo "1st Building....... "
+                echo "1st Building..... "
                 sh "npm install"
             }
         }
@@ -27,23 +27,29 @@ pipeline {
                 sh "npm run test"
             }
         }
-        stage('Deploy') 
-            { 
-                steps {
-                    script {
-                    current_branch= sh "git branch --show-current"
-                    if (current_branch == 'develop') {
-                        steps{
-                            sh 'npm run build'
-                            sh 'scp -r -i /var/jenkins_home/web_server.pem build/* ubuntu@18.170.48.210:/var/www/Protfolio_web_app/'
-                        }
-                    } else {
-                        echo '==== deoploy will continue after merging to develop branch ====='
-                    }
-                }
+        stage('Deploy') {
+            steps {
+                script {
+                    // Run the echo command and capture the output
+                    def echoOutput = sh(returnStdout: true, script: 'echo `git branch --show-current`').trim()
+
+                    // Assign the captured output to a variable
+                    def myVariable = echoOutput
+
+                    // Print the variable value
+                    echo "The variable value is: ${myVariable}"
                 }
             }
         }
+    }
+        // stage('Deploy') 
+        //     { 
+        //          steps{
+        //             sh 'npm run build'
+        //             sh 'scp -r -i /var/jenkins_home/workspace/web_server.pem build/* ubuntu@18.134.7.226:/var/www/Protfolio_web_app/'
+        //         }
+        //     }
+        // }
         post {
             success {
                 setBuildStatus("Build succeeded ✅", "SUCCESS"); 
