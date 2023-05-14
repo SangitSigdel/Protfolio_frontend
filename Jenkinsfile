@@ -37,7 +37,7 @@ pipeline {
                         ).trim()
                         echo "-----------------------------"
                         echo "${current_branch}"
-                    if ( current_branch === 'develop') {
+                    if ( ${current_branch} === 'develop') {
                         steps{
                             sh 'npm run build'
                             sh 'scp -r -i /var/jenkins_home/web_server.pem build/* ubuntu@18.170.48.210:/var/www/Protfolio_web_app/'
