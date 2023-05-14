@@ -29,10 +29,17 @@ pipeline {
         }
         stage('Deploy') 
             { 
-                 steps{
-                    echo 'Pulling...' + sh 'git branch --show-current'
-                    
+                script {
+                    if (echo `git branch --show-current` == 'develop') {
+                        steps{
+                            sh 'npm run build'
+                            sh 'scp -r -i /var/jenkins_home/web_server.pem build/* ubuntu@18.170.48.210:/var/www/Protfolio_web_app/'
+                        }
+                    } else {
+                        echo '====deoploy will continue after merging to develop branch=============='
+                    }
                 }
+
             }
         }
         post {
