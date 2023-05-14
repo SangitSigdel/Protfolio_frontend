@@ -34,19 +34,18 @@ pipeline {
                     def branchName = sh(returnStdout: true, script: 'git ls-remote --heads origin | grep $(git rev-parse HEAD) | cut -d / -f 3').trim()
 
                     // Print the branch name
-                    echo "The current Git branch is: ${branchName}"
+                    if(branchName=="develop"){
+                        sh 'npm run build'
+                        sh 'scp -r -i /var/jenkins_home/workspace/web_server.pem build/* ubuntu@18.134.7.226:/var/www/Protfolio_web_app/'
+                    }
+                    else {
+                        echo "======== Website will be deployed on merge to develop branch ============="
+                    }
                 }
             }
         }
     }
-        // stage('Deploy') 
-        //     { 
-        //          steps{
-        //             sh 'npm run build'
-        //             sh 'scp -r -i /var/jenkins_home/workspace/web_server.pem build/* ubuntu@18.134.7.226:/var/www/Protfolio_web_app/'
-        //         }
-        //     }
-        // }
+    
         post {
             success {
                 setBuildStatus("Build succeeded ✅", "SUCCESS"); 
