@@ -31,7 +31,7 @@ pipeline {
             { 
                  steps{
                     sh 'npm run build'
-                    sh 'scp -r -i /var/jenkins_home/workspace/web_server.pem build/* ubuntu@18.170.48.210:/var/www/Protfolio_web_app/'
+                    sh 'scp -r -i /home/ubuntu/jenkins_data/jenkins_home/web_server.pem build/* ubuntu@18.170.48.210:/var/www/Protfolio_web_app/'
                 }
             }
         }
