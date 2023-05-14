@@ -31,18 +31,10 @@ pipeline {
             { 
                 steps {
                     script {
-                        def current_branch= "sangit"
+                        def current_branch= sh ("git branch")
                         echo "-----------------------------"
-                        echo "${current_branch}"
-                    // if ( ${current_branch} === 'develop') {
-                    //     steps{
-                    //         sh 'npm run build'
-                    //         sh 'scp -r -i /var/jenkins_home/web_server.pem build/* ubuntu@18.170.48.210:/var/www/Protfolio_web_app/'
-                    //     }
-                    // } else {
-                    //     echo '==== deoploy will continue after merging to develop branch ====='
-                    // }
-                }
+                        echo "${current_branch}"   
+                    }
                 }
             }
         }
