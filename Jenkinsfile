@@ -17,7 +17,7 @@ pipeline {
         
         stage('Build') { 
             steps {
-                echo "1st Building...... "
+                echo "1st Building....... "
                 sh "npm install"
             }
         }
