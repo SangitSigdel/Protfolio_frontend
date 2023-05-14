@@ -30,14 +30,11 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    // Run the shell command and capture the output
-                    def echoOutput = sh(returnStdout: true, script: 'echo "Hello, Jenkins!"').trim()
+                    // Run the shell command to get the current Git branch and capture the output
+                    def branchName = sh(returnStdout: true, script: 'git rev-parse --abbrev-ref HEAD').trim()
 
-                    // Assign the captured output to a variable
-                    def myVariable = echoOutput
-
-                    // Print the variable value
-                    echo "The variable value is: ${myVariable}"
+                    // Print the branch name
+                    echo "The current Git branch is: ${branchName}"
                 }
             }
         }
