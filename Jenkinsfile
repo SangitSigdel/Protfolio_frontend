@@ -35,7 +35,7 @@ pipeline {
 
                     // // Print the branch name
                     // echo "The current Git branch is: ${branchName}"
-                    echo `git branch --show-current`
+                    sh "git branch --show-current"
                 }
             }
         }
