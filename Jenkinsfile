@@ -31,7 +31,7 @@ pipeline {
             steps {
                 script {
                     // Get the current branch name
-                    def gitBranch = sh(returnStdout: true, script: 'git rev-parse --abbrev-ref HEAD').trim()
+                    def gitBranch = sh(returnStdout: true, script: 'git branch --show-current').trim()
 
                     // Check if the branch is "develop"
                     if (gitBranch == 'develop') {
