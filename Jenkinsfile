@@ -31,9 +31,9 @@ pipeline {
             { 
                 steps {
                     script {
-                        def current_branch=`echo "$(git branch)"`
+                        def output = sh(returnStdout: true, script: 'git branch')
                         echo "-----------------------------"
-                        echo "${current_branch}"   
+                        echo "${output}"   
                     }
                 }
             }
