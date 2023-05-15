@@ -20,7 +20,7 @@ pipeline {
         
         stage('Build') { 
             steps {
-                setBuildStatus("pending..", "PENDING");
+                setBuildStatus("", "PENDING");
                 echo "1st Building..... "
                 sh "npm install"
             }
