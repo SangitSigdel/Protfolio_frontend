@@ -36,7 +36,7 @@ pipeline {
                     // Print the branch name
                     if(branchName=="develop"){
                         sh 'npm run build'
-                        sh 'scp -r -i /var/jenkins_home/web_server.pem build/* ubuntu@18.134.7.226:/var/www/Protfolio_web_app/'
+                        sh 'scp -r -i /var/jenkins_home/web_server.pem build/* ubuntu@18.169.241.165:/var/www/Protfolio_web_app/'
                     }
                     else {
                         echo "======== The current branch is ${branchName}. However, Website will be deployed on merge to develop branch ============="
