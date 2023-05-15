@@ -8,6 +8,9 @@ void setBuildStatus(String message, String state) {
   ]);
 }
 
+
+
+
 pipeline {
     agent any
     options {
@@ -17,6 +20,7 @@ pipeline {
         
         stage('Build') { 
             steps {
+                setBuildStatus("pending..", "PENDING");
                 echo "1st Building..... "
                 sh "npm install"
             }
