@@ -15,12 +15,12 @@ pipeline {
     agent any
     options {
       timeout(time: 12, unit: 'MINUTES') 
+      setBuildStatus("", "PENDING");
     } 
     stages {
         
         stage('Build') { 
             steps {
-                setBuildStatus("", "PENDING");
                 echo "1st Building..... "
                 sh "npm install"
             }
