@@ -21,6 +21,7 @@ pipeline {
         stage('Build') { 
             steps {
                 setBuildStatus("", "PENDING");
+                cleanWs();
                 echo "1st Building..... "
                 sh "npm install"
             }
@@ -56,6 +57,14 @@ pipeline {
             }
             failure {
                 setBuildStatus("Build failed ❌ ", "FAILURE");
+            }
+            always {
+                cleanWs(cleanWhenNotBuilt: false,
+                        deleteDirs: true,
+                        disableDeferredWipeout: true,
+                        notFailBuild: true,
+                        patterns: [[pattern: '.gitignore', type: 'INCLUDE'],
+                                    [pattern: '.propsfile', type: 'EXCLUDE']])
             }
 
         }
