@@ -38,7 +38,7 @@ pipeline {
                     // Print the branch name
                     if(branchName=="develop"){
                         sh 'npm run build'
-                        sh 'scp -r -i /var/jenkins_home/web_server.pem build/* ubuntu@18.169.241.165:/var/www/Protfolio_web_app/'
+                        sh 'scp -r -i /var/jenkins_home/web_server.pem build/* ubuntu@18.133.117.97:/var/www/Protfolio_web_app/'
                     }
                     else {
                         echo "============DEPLOYMENT WILL BE PERFORMED AFTER MERGED TO DEVELOP BRANCH===================="
