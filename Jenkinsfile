@@ -8,6 +8,13 @@ void setBuildStatus(String message, String state) {
   ]);
 }
 
+def sendEmail(String status) {
+    emailext body: "${status}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' has finished.",
+             recipientProviders: [[$class: 'CulpritsRecipientProvider']],
+             subject: "${status}: Job '${env.JOB_NAME}'",
+             to: env.BUILD_USER_EMAIL
+}
+
 pipeline {
     agent any
     options {
@@ -57,6 +64,9 @@ pipeline {
                 //         <p>Check console output at &QUOT;<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>&QUOT;</p>""",
                 //     recipientProviders: [[$class: 'DevelopersRecipientProvider']]                       
                 // )
+                 script {
+                        sendEmail("success")
+                }
             }
             failure {
                 setBuildStatus("Build failed ❌ ", "FAILURE");
@@ -66,6 +76,9 @@ pipeline {
                 //             <p>Check console output at &QUOT;<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>&QUOT;</p>""",
                 //         recipientProviders: [[$class: 'DevelopersRecipientProvider']]
                 //         )
+                script {
+                    sendEmail("failure")
+                }
             }
             always {
                 cleanWs(cleanWhenNotBuilt: false,
