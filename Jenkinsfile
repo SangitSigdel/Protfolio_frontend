@@ -27,6 +27,7 @@ pipeline {
                 setBuildStatus("", "PENDING");
                 // cleanWs();
                 echo "1st Building..... "
+                echo env.BUILD_USER_EMAIL
                 sh "npm install"
             }
         }
