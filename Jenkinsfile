@@ -18,13 +18,14 @@ pipeline {
         stage('Build') { 
             steps {
                 setBuildStatus("", "PENDING");
+                cleanWs();
                 echo "1st Building..... "
                 sh "npm install"
             }
         }
         stage('Test') { 
             steps {
-                echo "2nd Testing........."
+                echo "2nd Testing.........."
                 sh "npm run test"
             }
         }
@@ -65,6 +66,14 @@ pipeline {
                 //             <p>Check console output at &QUOT;<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>&QUOT;</p>""",
                 //         recipientProviders: [[$class: 'DevelopersRecipientProvider']]
                 //         )
+            }
+            always {
+                cleanWs(cleanWhenNotBuilt: false,
+                        deleteDirs: true,
+                        disableDeferredWipeout: true,
+                        notFailBuild: true,
+                        patterns: [[pattern: '.gitignore', type: 'INCLUDE'],
+                                    [pattern: '.propsfile', type: 'EXCLUDE']])
             }
 
         }
