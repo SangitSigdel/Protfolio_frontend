@@ -8,6 +8,17 @@ void setBuildStatus(String message, String state) {
   ]);
 }
 
+def sendEmail(String status) {
+    BUILD_TRIGGER_BY=$(curl -k --silent ${BUILD_URL}/api/xml | tr '<' '\n' | egrep '^userId>|^userName>' | sed 's/.*>//g' | sed -e '1s/$/ \//g' | tr '\n' ' ')
+    emailext body: "${status}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' has finished.",
+             recipientProviders: [[$class: 'CulpritsRecipientProvider']],
+             subject: "${status}: Job '${env.JOB_NAME}'",
+             to: BUILD_TRIGGER_BY
+}
+
+
+
+
 pipeline {
     agent any
     options {
@@ -24,7 +35,7 @@ pipeline {
         }
         stage('Test') { 
             steps {
-                echo "2nd Testing........."
+                echo "2nd Testing.........."
                 sh "npm run test"
             }
         }
@@ -37,7 +48,7 @@ pipeline {
                     // Print the branch name
                     if(branchName=="develop"){
                         sh 'npm run build'
-                        sh 'scp -r -i /var/jenkins_home/web_server.pem build/* ubuntu@18.169.241.165:/var/www/Protfolio_web_app/'
+                        sh 'scp -r -i /var/jenkins_home/web_server.pem build/* ubuntu@18.133.117.97:/var/www/Protfolio_web_app/'
                     }
                     else {
                         echo "============DEPLOYMENT WILL BE PERFORMED AFTER MERGED TO DEVELOP BRANCH==================="
@@ -50,21 +61,15 @@ pipeline {
         post {
             success {
                 setBuildStatus("Build succeeded ✅", "SUCCESS"); 
-                // emailext (
-                //     subject: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
-                //     body: """<p>SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
-                //         <p>Check console output at &QUOT;<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>&QUOT;</p>""",
-                //     recipientProviders: [[$class: 'DevelopersRecipientProvider']]                       
-                // )
+                script {
+                    sendEmail("success")
+                }
             }
             failure {
+                script {
+                    sendEmail("Build Failed")
+                }
                 setBuildStatus("Build failed ❌ ", "FAILURE");
-                //  emailext (
-                //         subject: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
-                //         body: """<p>FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
-                //             <p>Check console output at &QUOT;<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>&QUOT;</p>""",
-                //         recipientProviders: [[$class: 'DevelopersRecipientProvider']]
-                //         )
             }
 
         }
