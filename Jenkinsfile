@@ -12,7 +12,7 @@ def sendEmail(String status) {
     emailext body: "${status}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' has finished.",
              recipientProviders: [[$class: 'CulpritsRecipientProvider']],
              subject: "${status}: Job '${env.JOB_NAME}'",
-             to: env.BUILD_USER_EMAIL
+             to: "sangit.sigdel@gmail.com"
 }
 
 pipeline {
@@ -48,7 +48,7 @@ pipeline {
                         sh 'scp -r -i /var/jenkins_home/web_server.pem build/* ubuntu@18.133.117.97:/var/www/Protfolio_web_app/'
                     }
                     else {
-                        echo "============DEPLOYMENT WILL BE PERFORMED AFTER MERGED TO DEVELOP BRANCH===================="
+                        echo "============DEPLOYMENT WILL BE PERFORMED AFTER MERGED TO DEVELOP BRANCH==================="
                     }
                 }
             }
