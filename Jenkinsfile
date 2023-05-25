@@ -18,7 +18,7 @@ pipeline {
         stage('Build') { 
             steps {
                 setBuildStatus("", "PENDING");
-                cleanWs();
+                // cleanWs();
                 echo "1st Building..... "
                 sh "npm install"
             }
@@ -41,7 +41,7 @@ pipeline {
                         sh 'scp -r -i /var/jenkins_home/web_server.pem build/* ubuntu@18.169.241.165:/var/www/Protfolio_web_app/'
                     }
                     else {
-                        echo "============DEPLOYMENT WILL BE PERFORMED AFTER MERGED TO DEVELOP BRANCH==================="
+                        echo "============DEPLOYMENT WILL BE PERFORMED AFTER MERGED TO DEVELOP BRANCH===================="
                     }
                 }
             }
@@ -66,6 +66,14 @@ pipeline {
                 //             <p>Check console output at &QUOT;<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>&QUOT;</p>""",
                 //         recipientProviders: [[$class: 'DevelopersRecipientProvider']]
                 //         )
+            }
+            always {
+                cleanWs(cleanWhenNotBuilt: false,
+                        deleteDirs: true,
+                        disableDeferredWipeout: true,
+                        notFailBuild: true,
+                        patterns: [[pattern: '.gitignore', type: 'INCLUDE'],
+                                    [pattern: '.propsfile', type: 'EXCLUDE']])
             }
             always {
                 cleanWs(cleanWhenNotBuilt: false,
