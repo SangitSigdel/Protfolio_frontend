@@ -12,7 +12,7 @@ def sendEmail(String status) {
     emailext body: "${status}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' has finished.",
              recipientProviders: [[$class: 'CulpritsRecipientProvider']],
              subject: "${status}: Job '${env.JOB_NAME}'",
-             to: env.BUILD_USER_EMAIL
+             to: "sangit.sigdel@gmail.com"
 }
 
 pipeline {
@@ -27,7 +27,6 @@ pipeline {
                 setBuildStatus("", "PENDING");
                 // cleanWs();
                 echo "1st Building..... "
-                echo env.BUILD_USER_EMAIL
                 sh "npm install"
             }
         }
