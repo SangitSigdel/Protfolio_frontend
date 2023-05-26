@@ -1,3 +1,7 @@
+import hudson.model.User
+
+def userEmail = User.current()?.getProperty(hudson.tasks.Mailer.UserProperty)?.address
+
 void setBuildStatus(String message, String state) {
   step([
       $class: "GitHubCommitStatusSetter",
@@ -66,6 +70,7 @@ pipeline {
                         notFailBuild: true,
                         patterns: [[pattern: '.gitignore', type: 'INCLUDE'],
                                     [pattern: '.propsfile', type: 'EXCLUDE']])
+                println "Logged-in user email: ${userEmail}"
             }
 
         }
