@@ -8,12 +8,6 @@ void setBuildStatus(String message, String state) {
   ]);
 }
 
-def sendEmail(String status) {
-    emailext body: "${status}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' has finished.",
-             recipientProviders: [[$class: 'CulpritsRecipientProvider']],
-             subject: "${status}: Job '${env.JOB_NAME}'",
-             to: "sangit.sigdel@gmail.com"
-}
 
 pipeline {
     agent any
@@ -44,7 +38,7 @@ pipeline {
                     // Print the branch name
                     if(branchName=="develop"){
                         sh 'npm run build'
-                        sh 'scp -r -i /var/jenkins_home/web_server.pem build/* ubuntu@18.133.117.97:/var/www/Protfolio_web_app/'
+                        sh 'scp -r -i /var/jenkins_home/web_server.pem build/* ubuntu@35.178.20.24:/var/www/Protfolio_web_app/'
                     }
                     else {
                         echo "============DEPLOYMENT WILL BE PERFORMED AFTER MERGED TO DEVELOP BRANCH==================="
@@ -63,9 +57,7 @@ pipeline {
                 //         <p>Check console output at &QUOT;<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>&QUOT;</p>""",
                 //     recipientProviders: [[$class: 'DevelopersRecipientProvider']]                       
                 // )
-                 script {
-                        sendEmail("success")
-                }
+                 
             }
             failure {
                 setBuildStatus("Build failed ❌ ", "FAILURE");
@@ -75,9 +67,7 @@ pipeline {
                 //             <p>Check console output at &QUOT;<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>&QUOT;</p>""",
                 //         recipientProviders: [[$class: 'DevelopersRecipientProvider']]
                 //         )
-                script {
-                    sendEmail("failure")
-                }
+                
             }
             always {
                 cleanWs(cleanWhenNotBuilt: false,
