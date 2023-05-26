@@ -25,7 +25,6 @@ pipeline {
         stage('Build') { 
             steps {
                 setBuildStatus("", "PENDING");
-                // cleanWs();
                 echo "1st Building..... "
                 sh "npm install"
             }
