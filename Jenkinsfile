@@ -56,7 +56,12 @@ pipeline {
                  
             }
             failure {
+
+                echo "The jenkins user email is: ${env.JENKINS_USER_EMAIL}"
                 setBuildStatus("Build failed ❌ ", "FAILURE");
+                emailext subject: "Jenkins Pipeline Failure",
+                body: """ Jenkins Pipeline failed. Check the logs for more details.""",
+                to: "${env.JENKINS_USER_EMAIL}" 
                 
             }
             always {
