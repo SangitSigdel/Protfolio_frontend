@@ -13,7 +13,9 @@ pipeline {
     agent any
     options {
       timeout(time: 12, unit: 'MINUTES') 
+      buildDiscarder logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '10', daysToKeepStr: '', numToKeepStr: '10')
     } 
+
     stages {
         
         stage('Build') { 
