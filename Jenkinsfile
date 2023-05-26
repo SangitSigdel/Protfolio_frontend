@@ -53,6 +53,10 @@ pipeline {
         post {
             success {
                 setBuildStatus("Build succeeded ✅", "SUCCESS"); 
+                echo "The jenkins user email is: ${env.JENKINS_USER_EMAIL}"
+                emailext subject: "Jenkins Pipeline Failure",
+                body: """ Jenkins Pipeline Passed. Check the logs for more details.""",
+                to: "sangit.sigdel@gmail.com" 
                  
             }
             failure {
@@ -61,7 +65,7 @@ pipeline {
                 setBuildStatus("Build failed ❌ ", "FAILURE");
                 emailext subject: "Jenkins Pipeline Failure",
                 body: """ Jenkins Pipeline failed. Check the logs for more details.""",
-                to: "${env.JENKINS_USER_EMAIL}" 
+                to: "sangit.sigdel@gmail.com" 
                 
             }
             always {
