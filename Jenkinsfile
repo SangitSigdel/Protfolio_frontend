@@ -40,7 +40,7 @@ pipeline {
                     // Print the branch name
                     if(branchName=="develop"){
                         sh 'npm run build'
-                        sh 'scp -r -i /var/jenkins_home/web_server.pem build/* ubuntu@35.178.20.24:/var/www/Protfolio_web_app/'
+                        sh 'scp -r -i /var/jenkins_home/web_server.pem build/* ubuntu@13.40.134.247:/var/www/Protfolio_web_app/'
                     }
                     else {
                         echo "============DEPLOYMENT WILL BE PERFORMED AFTER MERGED TO DEVELOP BRANCH==================="
@@ -57,7 +57,7 @@ pipeline {
             }
             failure {
                 setBuildStatus("Build failed ❌ ", "FAILURE");
-                
+                mail bcc: '', body: "<b>Example</b><br>Project: ${env.JOB_NAME} <br>Build Number: ${env.BUILD_NUMBER} <br> URL de build: ${env.BUILD_URL}", cc: '', charset: 'UTF-8', from: '', mimeType: 'text/html', replyTo: '', subject: "ERROR CI: Project name -> ${env.JOB_NAME}", to: "sangit.sigdel@gmail.com";  
             }
             always {
                 cleanWs(cleanWhenNotBuilt: false,
