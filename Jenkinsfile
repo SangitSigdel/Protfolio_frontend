@@ -1,5 +1,9 @@
 import hudson.model.User
 
+def item = hudson.model.Hudson.instance.getItem(env.JOB_NAME) 
+def build = item.getLastBuild()
+def cause = build.getCause(hudson.model.Cause.UserIdCause.class)
+def id = cause.getUserId()
 User u = User.get(id)
 def userEmail = u.getProperty(Mailer.UserProperty.class)
 
