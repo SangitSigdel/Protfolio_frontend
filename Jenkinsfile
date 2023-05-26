@@ -1,11 +1,5 @@
 import hudson.model.User
 
-def item = hudson.model.Hudson.instance.getItem(env.JOB_NAME) 
-def build = item.getLastBuild()
-def cause = build.getCause(hudson.model.Cause.UserIdCause.class)
-def id = cause.getUserId()
-User u = User.get(id)
-def userEmail = u.getProperty(Mailer.UserProperty.class)
 
 void setBuildStatus(String message, String state) {
   step([
@@ -54,6 +48,23 @@ pipeline {
                     else {
                         echo "============DEPLOYMENT WILL BE PERFORMED AFTER MERGED TO DEVELOP BRANCH==================="
                     }
+                }
+            }
+        }
+         stage('Get User Email') {
+            steps {
+                script {
+                    def buildCauses = currentBuild.getBuildCauses()
+                    def userEmail
+
+                    for (cause in buildCauses) {
+                        if (cause instanceof hudson.model.Cause$UserIdCause) {
+                            userEmail = cause.getUser().getProperty(hudson.tasks.Mailer$UserProperty).getAddress()
+                            break
+                        }
+                    }
+
+                    echo "User Email: ${userEmail}"
                 }
             }
         }
