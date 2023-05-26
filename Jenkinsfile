@@ -1,6 +1,7 @@
 import hudson.model.User
 
-def userEmail = User.current()?.getProperty(hudson.tasks.Mailer.UserProperty)?.address
+User u = User.get(id)
+def userEmail = u.getProperty(Mailer.UserProperty.class)
 
 void setBuildStatus(String message, String state) {
   step([
